@@ -1,0 +1,8 @@
+data/*.csv
+data/*.parquet*
+outputs/*
+!outputs/.gitkeep
+__pycache__/
+*.pyc
+.env
+*.run.json

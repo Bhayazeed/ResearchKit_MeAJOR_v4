@@ -1,0 +1,1 @@
+The original 191 MB MeAJOR 2.0 CSV is included for local reproducible preparation. Attribution: Cardoso et al., Zenodo DOI 10.5281/zenodo.18471483, CC BY 4.0. The input is untrusted email data; do not visit embedded links.

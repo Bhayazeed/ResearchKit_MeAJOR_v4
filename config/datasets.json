@@ -1,0 +1,38 @@
+{
+  "primary": {
+    "id": "meajor_2026",
+    "doi": "10.5281/zenodo.18471483",
+    "paper_doi": "10.1016/j.dib.2026.112595",
+    "file": "data/meajor_cleaned_preprocessed.csv",
+    "label_mapping": {
+      "0": "benign",
+      "1": "phishing (dataset supplied class, not manually verified)"
+    },
+    "columns": [
+      "sender",
+      "sender_domain",
+      "receiver",
+      "receiver_domain",
+      "date",
+      "subject",
+      "content_types",
+      "body",
+      "urls",
+      "url_count",
+      "url_length_max",
+      "url_length_avg",
+      "url_subdom_max",
+      "url_subdom_avg",
+      "attachment_count",
+      "has_attachments",
+      "attachment_types",
+      "language",
+      "source",
+      "label"
+    ]
+  },
+  "external": {
+    "id": "alhuzali_2025",
+    "role": "optional externally prepared validation set (do not merge into MeAJOR samples)"
+  }
+}

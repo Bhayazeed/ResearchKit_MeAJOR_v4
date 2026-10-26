@@ -1,0 +1,83 @@
+{
+  "experiment_id": "meajor_2026_v4",
+  "ollama_base_url": "http://127.0.0.1:11434",
+  "attacker": {
+    "id": "qwen38_27b",
+    "tag": "qwen3.8:latest",
+    "provider": "ollama",
+    "kind": "chat",
+    "temperature": 0.2
+  },
+  "victims": [
+    {
+      "id": "qwen35_9b",
+      "tag": "qwen3.5:9b",
+      "provider": "ollama",
+      "kind": "chat",
+      "enabled": true
+    },
+    {
+      "id": "gemma4_e4b",
+      "tag": "gemma4:e4b",
+      "provider": "ollama",
+      "kind": "chat",
+      "enabled": true
+    },
+    {
+      "id": "pplx_decider",
+      "tag": "pplx-decider:latest",
+      "provider": "ollama",
+      "kind": "decision",
+      "enabled": true,
+      "developer": "Perplexity"
+    },
+    {
+      "id": "nimble_9b",
+      "tag": "nimble:9b",
+      "provider": "ollama",
+      "kind": "decision",
+      "enabled": true,
+      "developer": "Bespoke Labs"
+    },
+    {
+      "id": "tev1_4b",
+      "tag": "tev1:4b",
+      "provider": "ollama",
+      "kind": "decision",
+      "enabled": true,
+      "developer": "Together AI"
+    },
+    {
+      "id": "clef_flash_9b",
+      "tag": "clef-flash:9b",
+      "provider": "ollama",
+      "kind": "decision",
+      "enabled": false,
+      "developer": "Cloudflare"
+    },
+    {
+      "id": "clef_27b",
+      "tag": "clef:27b",
+      "provider": "ollama",
+      "kind": "decision",
+      "enabled": false,
+      "developer": "Cloudflare"
+    }
+  ],
+  "methods": [
+    "gan",
+    "llm"
+  ],
+  "gan": {
+    "library": "OpenAttack",
+    "gan_dataset": "sst",
+    "warning": "Pretrained on SST; do not claim email-domain GAN training"
+  },
+  "sampling": {
+    "pilot_per_class": 500,
+    "main_per_class": 1500,
+    "seed": 42
+  },
+  "prompt_version": "defensive_rewrite_v1_2026-10-19",
+  "notes": "Only baseline classification / quality annotation / offline candidate evaluation enabled. No phishing evasion generation."
+}
