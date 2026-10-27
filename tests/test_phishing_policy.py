@@ -35,10 +35,15 @@ class TestEnglishLengthPolicy(unittest.TestCase):
         with patch.object(self.curate,'detect_english',return_value=self.english), patch.object(self.curate,'decision',return_value=('usable',.9)) as model:
             rejected=self.curate.annotate_row(short,self.args,'test',True)
             self.assertEqual(rejected['quality_reason'],'body_too_short')
+            self.assertEqual(rejected['english_score'],'')
+            self.assertEqual(rejected['quality_confidence'],'')
+            self.assertEqual(rejected['language_screen'],'not_evaluated')
             model.assert_not_called()
             accepted=self.curate.annotate_row(copy.deepcopy(self.rows[1]),self.args,'test',True)
             self.assertEqual(accepted['quality_accepted'],'1')
             self.assertEqual(accepted['body_word_count'],'101')
+            self.assertEqual(accepted['english_score'],'')
+            self.assertEqual(accepted['quality_confidence'],.9)
             self.assertEqual(model.call_count,1)
 
     def test_curator_judges_language_only(self):
@@ -107,6 +112,36 @@ class TestEnglishLengthPolicy(unittest.TestCase):
         for meaning in CRITERIA.values():self.assertIn(meaning,captured[0][1]['messages'][0]['content'])
         for old_label in ('SPAM','NOT_SPAM'):
             with self.assertRaises(BackendError):parse_label(old_label)
+
+
+class TestCurationETA(unittest.TestCase):
+    def test_resume_and_fast_prechecks_do_not_inflate_model_speed(self):
+        curate=script('curate_meajor')
+        with patch('builtins.print') as output:
+            progress=curate.CurationProgress(104,98,{'local':3,'model':3})
+            progress.report()
+            self.assertIn('Checked 98/104',output.call_args.args[0])
+            self.assertIsNone(progress.eta_seconds())
+            progress.record('local',.2)
+            self.assertIsNone(progress.eta_seconds())  # No model timings yet.
+            progress.record('model',10)
+            self.assertAlmostEqual(progress.eta_seconds(),20.4)
+            progress.record('model',20)
+            self.assertAlmostEqual(progress.eta_seconds(),15.4)
+            progress.report()
+            self.assertIn('estimated annotation finish:',output.call_args.args[0])
+
+    def test_completion_and_fully_cached_resume_need_no_timing_samples(self):
+        curate=script('curate_meajor')
+        with patch('builtins.print') as output:
+            cached=curate.CurationProgress(10,10,{})
+            self.assertEqual(cached.eta_seconds(),0)
+            cached.report()
+            self.assertIn('Checked 10/10 (100.0%)',output.call_args.args[0])
+            fresh=curate.CurationProgress(1,0,{'local':1})
+            fresh.record('local',.1)
+            self.assertEqual(fresh.eta_seconds(),0)
+            self.assertIn('ETA: 00:00:00',output.call_args.args[0])
 
 
 if __name__=='__main__':unittest.main()

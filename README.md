@@ -89,6 +89,10 @@ Keluaran berada di `outputs/quality_pplx_english_length_v3/`:
 
 CSV audit, accepted dan ringkasan diterbitkan setelah seluruh kurasi selesai. Jika proses terputus, perbaiki penyebabnya lalu jalankan perintah yang sama untuk melanjutkan dari checkpoint. Perubahan sumber, model atau kebijakan memerlukan direktori output baru. Jangan menggunakan hasil lama sebagai hasil kebijakan baru.
 
+Terminal menampilkan persentase selesai, jumlah baris dari checkpoint, waktu sesi berjalan, sisa pekerjaan lokal/model, **ETA**, dan perkiraan tanggal/jam selesai anotasi dalam zona waktu komputer (offset UTC ikut ditampilkan). ETA memakai rata-rata hingga 50 durasi terbaru untuk setiap jenis pekerjaan; baris checkpoint tidak dipakai sebagai sampel kecepatan. Sebelum sampel waktu yang dibutuhkan tersedia, statusnya `collecting timing samples`. Estimasi belum mencakup ekspor CSV akhir dan dapat berubah mengikuti kecepatan model/retry. Progres diperbarui setelah baris selesai: pada sampel pertama tiap jenis, setiap 100 baris baru, atau setelah interval 30 detik. Interval bisa diubah melalui `--progress-every` pada perintah Python; saat satu permintaan model masih menunggu, tampilan belum diperbarui. Sesudah ekspor, waktu selesai aktual dicetak. Perubahan tampilan ini tetap kompatibel dengan checkpoint kebijakan yang sama.
+
+`english_score` memang kosong pada kebijakan `english_length`: field itu digunakan oleh diagnostik langdetect. Jika body kurang dari 101 kata, baris ditolak lokal dengan `language_screen=not_evaluated`, `language_method=not_checked_length`, dan confidence kosong karena PPLX belum dipanggil. Jika PPLX dipanggil, keputusannya tersimpan di `language_screen` dan confidence pilihan model di `quality_confidence` jika API menyediakannya. Confidence tersebut bukan skor bahasa dari langdetect; ketika pilihannya `not_usable`, confidence mengacu pada pilihan penolakan itu.
+
 ### 3. Periksa input baseline tanpa inference
 
 ```powershell

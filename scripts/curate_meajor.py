@@ -9,7 +9,8 @@ completed decisions resume safely. Both accepted and rejected rows remain in
 an audit CSV for paired population analysis.
 """
 import argparse,csv,hashlib,json,os,re,sys,time,urllib.error,urllib.request
-from collections import Counter
+from collections import Counter,deque
+from datetime import datetime,timedelta
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from phishbench.data import read_dataset,atomic_csv,atomic_json,append_checkpoint,hash_file,load_row_checkpoint
@@ -37,6 +38,57 @@ def body_text(row):
     if 'meajor_body' in row:return row['meajor_body'] or ''
     text=row['original_text']
     return text.split('\n\n',1)[1] if text.startswith('Subject: ') and '\n\n' in text else text
+
+def work_kind(row,args):
+    if args.policy=='english_length' and len(WORDS.findall(body_text(row)))<args.min_words:
+        return 'local'
+    return 'model' if args.provider in ('ollama','openrouter') else 'local'
+
+
+def duration_text(seconds):
+    seconds=max(0,int(seconds+0.5))
+    hours,seconds=divmod(seconds,3600)
+    minutes,seconds=divmod(seconds,60)
+    return f'{hours:02d}:{minutes:02d}:{seconds:02d}'
+
+
+class CurationProgress:
+    """Estimate local and model work separately, using only this session.
+
+    Cached rows never contribute timing samples. Estimates cover annotation
+    and checkpoint writes, excluding initial loading and final CSV export.
+    """
+    def __init__(self,total,cached,pending,interval=30):
+        self.total=total;self.cached=cached;self.pending=Counter(pending)
+        self.samples={'local':deque(maxlen=50),'model':deque(maxlen=50)}
+        self.interval=interval;self.started=time.monotonic();self.last_report=self.started
+        self.new_done=0
+
+    def eta_seconds(self):
+        if any(n and not self.samples[kind] for kind,n in self.pending.items()):
+            return None
+        return sum(n*sum(self.samples[kind])/len(self.samples[kind])
+                   for kind,n in self.pending.items() if n)
+
+    def record(self,kind,seconds):
+        first_sample=not self.samples[kind]
+        self.samples[kind].append(max(0,seconds));self.pending[kind]-=1;self.new_done+=1
+        if first_sample or self.new_done%100==0 or time.monotonic()-self.last_report>=self.interval or not sum(self.pending.values()):
+            self.report()
+
+    def report(self):
+        now=time.monotonic();self.last_report=now
+        done=self.total-sum(self.pending.values());eta=self.eta_seconds()
+        if eta is None:
+            estimate='ETA: collecting timing samples | estimated annotation finish: unknown'
+        else:
+            finish=(datetime.now().astimezone()+timedelta(seconds=eta)).strftime('%Y-%m-%d %H:%M:%S %z')
+            estimate=f'ETA: {duration_text(eta)} | estimated annotation finish: {finish}'
+        print(f'Checked {done}/{self.total} ({100*done/self.total:.1f}%) | cached: {self.cached}'
+              f' | session elapsed: {duration_text(now-self.started)}'
+              f' | pending model: {self.pending["model"]}, local: {self.pending["local"]}'
+              f' | {estimate} (excludes final CSV export)',flush=True)
+
 
 def decision(provider,model,base_url,body,timeout,policy='english_length'):
     instructions,criteria=(INSTRUCTIONS,CRITERIA) if policy=='english_length' else (READABILITY_INSTRUCTIONS,READABILITY_CRITERIA)
@@ -118,8 +170,10 @@ def main():
     p.add_argument('--timeout',type=int,default=180)
     p.add_argument('--policy',choices=['english_length','readability'],default='english_length')
     p.add_argument('--min-words',type=int,default=101,help='Minimum body words, inclusive; default 101 implements more than 100 words')
+    p.add_argument('--progress-every',type=int,default=30,help='Progress interval in seconds, checked after each completed row (default: 30)')
     args=p.parse_args()
     if args.min_words<1:p.error('--min-words must be positive')
+    if args.progress_every<1:p.error('--progress-every must be positive')
     if args.policy=='english_length' and args.provider not in ('ollama','openrouter'):
         p.error('English/length policy requires a decision model for English screening. Use --policy readability for separate diagnostics.')
     model=args.model or {'langdetect':'langdetect','ollama':'pplx-decider:latest','openrouter':'typesafe/jev-1.14','none':'none'}[args.provider]
@@ -150,18 +204,24 @@ def main():
     else:atomic_json(manifest,sig)
     cached=load_row_checkpoint(journal, ('quality_category','quality_accepted','quality_status'))
     print('Loaded',len(rows),'rows; label',args.label,'; cached',len(cached),'; provider',args.provider,flush=True)
+    print('Planning pending work for ETA...',flush=True)
+    pending_work={r['row_id']:work_kind(r,args) for r in rows if r['row_id'] not in cached}
+    progress=CurationProgress(len(rows),len(rows)-len(pending_work),Counter(pending_work.values()),args.progress_every)
+    progress.report()
     annotated=[];stats=Counter()
     for idx,row in enumerate(rows,1):
         rid=row['row_id'];entry=cached.get(rid)
         if entry is None:
+            started=time.monotonic()
             try:entry=annotate_row(row,args,model,raw_input)
             except Exception as e:
                 print('Stopped at',idx,'of',len(rows),'->',repr(e),'(checkpoint preserved)',file=sys.stderr);return 1
             append_checkpoint(journal,entry)
+            progress.record(pending_work[rid],time.monotonic()-started)
         if entry['original_sha256']!=row['original_sha256']:raise ValueError('Quality checkpoint row checksum drift')
         annotated.append(dict(row,**{k:v for k,v in entry.items() if k!='row_id'}))
         stats[entry['quality_category']]+=1
-        if idx==1 or idx%100==0:print('Checked',idx,'/',len(rows),'usable',stats['usable'],flush=True)
+    print('Annotation complete; exporting audit, accepted CSV and summary...',flush=True)
     atomic_csv(dest/'quality_audit.csv',annotated,list(annotated[0]))
     accepted=[r for r in annotated if r['quality_accepted']=='1']
     atomic_csv(dest/'quality_accepted.csv',accepted,list(annotated[0]))
@@ -171,5 +231,6 @@ def main():
     summary['reasons']=dict(Counter(r['quality_reason'] for r in annotated))
     summary['min_body_words']=args.min_words if args.policy=='english_length' else None
     atomic_json(dest/'quality_summary.json',summary)
+    print('Curation and export finished:',datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %z'),flush=True)
     print(json.dumps(summary,indent=2));return 0
 if __name__=='__main__':sys.exit(main())
