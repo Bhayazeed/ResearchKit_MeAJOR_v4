@@ -35,7 +35,7 @@ class TestResearchPipeline(unittest.TestCase):
         curate = script('curate_meajor')
         for provider in ('ollama', 'openrouter', 'none'):
             dest = self.root / provider
-            args = ['curate', '--input', str(self.source), '--output-dir', str(dest), '--provider', provider]
+            args = ['curate', '--input', str(self.source), '--output-dir', str(dest), '--provider', provider, '--policy', 'readability']
             with patch.object(sys, 'argv', args), patch.object(curate, 'decision', return_value=('usable', .9)) as backend:
                 self.assertEqual(curate.main(), 0)
                 self.assertEqual(backend.call_count, 0 if provider == 'none' else 2)
@@ -81,7 +81,7 @@ class TestResearchPipeline(unittest.TestCase):
         args = ['freeze', '--input', str(self.source), '--audit', str(path), '--output', str(output)]
         with patch.object(sys, 'argv', args):
             freeze.main()
-        self.assertEqual(read_csv(output), self.selected)
+        self.assertEqual(read_csv(output), [dict(row,quality_accepted='1') for row in self.selected])
         self.assertEqual(json.loads(Path(str(output)+'.source.json').read_text())['per_class'], None)
         audit[0]['original_sha256'] = 'changed'
         atomic_csv(path, audit, list(audit[0]))

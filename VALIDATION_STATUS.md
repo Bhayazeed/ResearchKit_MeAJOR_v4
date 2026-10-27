@@ -1,5 +1,23 @@
 # Validation status
 
+## Corrected curator/victim roles (2026-10-27)
+
+- Supersedes the strict-curation proposal below. The active policy is `english_length`: code checks more than 100 alphabetic body words (minimum 101); the decision model checks English only. No phishing, legitimacy, reputation, or separate readability gate is used. No langdetect score threshold is applied.
+- PPLX and chat LLMs classify PHISHING/NON_PHISHING only in their victim role. Original dataset labels remain unchanged. A victim NON_PHISHING result stays in the evaluation.
+- Launchers, baseline input guards, downstream defaults and documentation now use the English/length v3 accepted dataset and its separate baseline output directory. Historical curation files remain unchanged; their acceptance flags are not silently converted to the new policy.
+- All 19 offline tests passed, including the exact 100/101 boundary, body-only counting, English rejection, resume/manifest integrity and an accepted row later predicted NON_PHISHING by the victim. Model responses are mocked. Evidence: `outputs/review_20261027/tests_english_length.txt`.
+- No full corrected curation or production victim inference has been executed. The final accepted count and live-model behavior under this policy remain unverified.
+
+## Superseded strict curation and shared classification (2026-10-27)
+
+- Active model labels are PHISHING/NON_PHISHING. Chat and decision models use shared definitions; decision probabilities use the PHISHING key. Old task aliases were removed from active Python classification/data parsing code. Classification instructions/criteria are hashed in baseline manifests.
+- New curation enforces at least 100 body words, English score >=0.90, and model-screened phishing evidence. Rejection reasons and policy thresholds are exported. The subject does not count toward the minimum. A link/placeholder alone does not establish phishing.
+- Baseline launchers and downstream dataset defaults point to the new strict accepted CSV. Baseline guards reject historical readability-only rows as inputs to the strict workflow. Optional freezing preserves primary audit annotations.
+- Historical PPLX output is retained. The 31,056 old accepted rows include 12,998 below 100 body words; they cannot be represented as already passing the new policy.
+- Tests use mocked model decisions and synthetic neutral text to exercise gates, exact word boundary, language failure, semantic rejection, resumed processing, manifest drift, shared classification payloads, probability mapping, and the curated-to-baseline-to-metrics handoff. No attacker generation was added.
+- Full strict curation and production baseline inference have not been executed. The accepted count under the new policy is not yet known. Existing readability evidence is historical, not a strict-policy result.
+- Final checks: 19 tests passed; Python compilation succeeded; no old task label strings remain in active `phishbench`, `scripts`, or `config` code. The local PPLX endpoint at port 11435 refused the connection during the 2026-10-27 availability check, so no new live curation was started. Test log and legacy input checks are in `outputs/review_20261027`.
+
 ## Label-1 pipeline review (2026-10-26)
 
 - Status: needs methodological revision before paper claims; the label-1 CSV path and completed PPLX output were independently reconciled.

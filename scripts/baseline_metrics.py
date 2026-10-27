@@ -2,6 +2,7 @@
 import argparse,glob,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from phishbench.workflow import CURATED_DATASET
 from phishbench.data import read_csv,read_dataset,atomic_csv
 
 def metrics(dataset,baseline):
@@ -26,7 +27,7 @@ def metrics(dataset,baseline):
     return {'n_total':len(dataset),'n_classified':n,'n_missing':missing,'n_invalid_label':invalid_label,'n_positive':positives,'n_negative':negatives,'metric_scope':scope,'classification_coverage':percent(n,positives+negatives),'detection_rate_all_positives':percent(tp,positives),'tp':tp,'tn':tn,'fp':fp,'fn':fn,'accuracy':percent(tp+tn,n),'precision_phishing':percent(tp,tp+fp),'recall_phishing':percent(tp,tp+fn),'f1_phishing':percent(2*tp,2*tp+fp+fn),'tp_pool':tp,'metric_note':'Metrics are conditional on classified rows. Single-class precision/F1/accuracy do not estimate full detector performance; detection_rate_all_positives includes missing predictions in its denominator.'}
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--dataset',required=True);p.add_argument('--dir',required=True);p.add_argument('--output',required=True);p.add_argument('--label',choices=['0','1','all'],default='1',help='Gold label to include (default: 1)');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--dataset',default=CURATED_DATASET);p.add_argument('--dir',required=True);p.add_argument('--output',required=True);p.add_argument('--label',choices=['0','1','all'],default='1',help='Gold label to include (default: 1)');args=p.parse_args()
     ds=read_dataset(args.dataset,label=args.label);output=[]
     for path in glob.glob(str(Path(args.dir)/'*_baseline.csv')):
         v=Path(path).name.replace('_baseline.csv','');row={'victim_id':v};row.update(metrics(ds,read_csv(path)));output.append(row)

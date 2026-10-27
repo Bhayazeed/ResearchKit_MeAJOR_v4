@@ -56,7 +56,7 @@ class TestFullDataset(unittest.TestCase):
     def test_pplx_interruption_resume_and_manifest(self):
         curate = script('curate_meajor')
         dest = self.root / 'quality'
-        args = ['curate', '--input', str(self.source), '--output-dir', str(dest), '--provider', 'ollama', '--label', 'all']
+        args = ['curate', '--input', str(self.source), '--output-dir', str(dest), '--provider', 'ollama', '--policy', 'readability', '--label', 'all']
         with patch.object(sys, 'argv', args), patch.object(curate, 'decision', side_effect=[('usable', .9), RuntimeError('offline')]):
             self.assertEqual(curate.main(), 1)
         with patch.object(sys, 'argv', args), patch.object(curate, 'decision', return_value=('not_usable', .8)) as backend:
@@ -78,7 +78,7 @@ class TestFullDataset(unittest.TestCase):
     def test_raw_langdetect_and_cached_language_fields(self):
         curate = script('curate_meajor')
         dest = self.root / 'language'
-        args = ['curate', '--input', str(self.source), '--output-dir', str(dest), '--provider', 'langdetect', '--label', 'all']
+        args = ['curate', '--input', str(self.source), '--output-dir', str(dest), '--provider', 'langdetect', '--policy', 'readability', '--label', 'all']
         with patch.object(sys, 'argv', args):
             self.assertEqual(curate.main(), 0)
         first = read_csv(dest / 'quality_audit.csv')

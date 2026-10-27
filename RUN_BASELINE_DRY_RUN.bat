@@ -6,11 +6,12 @@ if exist ".venv\Scripts\python.exe" (set "PYTHON=.venv\Scripts\python.exe") else
 if errorlevel 1 (echo ERROR: Python not available & pause & exit /b 1)
 echo MeAJOR v4: BASELINE_DRY_RUN
 %PYTHON% "scripts/run_baseline.py" ^
+  --require-curated ^
   --label 1 ^
   --input ^
-  "data/meajor_cleaned_preprocessed.csv" ^
+  "outputs/quality_pplx_english_length_v3/quality_accepted.csv" ^
   --output-dir ^
-  "outputs/label1_baseline" ^
+  "outputs/curated_english_length_baseline" ^
   --dry-run
 set "CODE=%ERRORLEVEL%"
 if not "%CODE%"=="0" echo ERROR: operation failed; retry with unchanged arguments to resume

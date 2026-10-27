@@ -3,11 +3,12 @@
 import argparse,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from phishbench.workflow import CURATED_DATASET
 from phishbench.data import read_csv,read_dataset,atomic_csv
 from phishbench.quality import screen,tokens
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--dataset',required=True);p.add_argument('--candidates',required=True);p.add_argument('--output',required=True);p.add_argument('--sbert',action='store_true');p.add_argument('--label',choices=['0','1','all'],default='1',help='Gold label to include (default: 1)');args=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--dataset',default=CURATED_DATASET);p.add_argument('--candidates',required=True);p.add_argument('--output',required=True);p.add_argument('--sbert',action='store_true');p.add_argument('--label',choices=['0','1','all'],default='1',help='Gold label to include (default: 1)');args=p.parse_args()
  from sacrebleu.metrics import BLEU
  from rouge_score.rouge_scorer import RougeScorer
  bleu=BLEU(effective_order=True);rouge=RougeScorer(['rougeL'],use_stemmer=True)

@@ -18,11 +18,11 @@ class TestMeAJOR(unittest.TestCase):
    self.assertEqual(len(chosen),6)
    self.assertEqual([x['dataset_label'] for x in chosen].count('1'),3)
    self.assertIn('meajor_sender',chosen[0]);self.assertTrue(all(x['meajor_body'] for x in chosen))
-   c=subprocess.run([sys.executable,str(ROOT/'scripts/curate_meajor.py'),'--input',str(o),'--output-dir',str(d/'quality'),'--provider','langdetect','--label','all'],capture_output=True,text=True)
+   c=subprocess.run([sys.executable,str(ROOT/'scripts/curate_meajor.py'),'--input',str(o),'--output-dir',str(d/'quality'),'--provider','langdetect','--policy','readability','--label','all'],capture_output=True,text=True)
    self.assertEqual(c.returncode,0,c.stderr)
    with (d/'quality/quality_audit.csv').open(encoding='utf-8-sig') as f:aud=list(csv.DictReader(f))
    self.assertEqual(len(aud),6);self.assertTrue(all(x['quality_accepted']=='1' for x in aud))
-   second=subprocess.run([sys.executable,str(ROOT/'scripts/curate_meajor.py'),'--input',str(o),'--output-dir',str(d/'quality'),'--provider','langdetect','--label','all'],capture_output=True,text=True)
+   second=subprocess.run([sys.executable,str(ROOT/'scripts/curate_meajor.py'),'--input',str(o),'--output-dir',str(d/'quality'),'--provider','langdetect','--policy','readability','--label','all'],capture_output=True,text=True)
    self.assertEqual(second.returncode,0,second.stderr)
    self.assertEqual(len((d/'quality/quality_checkpoint.jsonl').read_text().splitlines()),6)
  def test_binary_label(self):

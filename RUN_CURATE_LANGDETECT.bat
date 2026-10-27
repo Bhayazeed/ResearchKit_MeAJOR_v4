@@ -6,11 +6,12 @@ if exist ".venv\Scripts\python.exe" (set "PYTHON=.venv\Scripts\python.exe") else
 if errorlevel 1 (echo ERROR: Python not available & pause & exit /b 1)
 echo MeAJOR v4: CURATE_LANGDETECT
 %PYTHON% "scripts/curate_meajor.py" ^
+  --policy readability ^
   --label 1 ^
   --input ^
   "data/meajor_cleaned_preprocessed.csv" ^
   --output-dir ^
-  "outputs/quality_langdetect_label1" ^
+  "outputs/quality_langdetect_diagnostic_v2" ^
   --provider ^
   langdetect
 set "CODE=%ERRORLEVEL%"

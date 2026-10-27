@@ -6,24 +6,28 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from phishbench.data import read_dataset,atomic_csv,atomic_json,append_checkpoint,hash_file,load_row_checkpoint
 from phishbench.ollama_backend import Ollama,BackendError
 from phishbench.classification import CHAT_PROMPT,INSTRUCTIONS,CRITERIA
+from phishbench.workflow import CURATED_DATASET,BASELINE_DIR,validate_curated_rows
 
 PROMPT=CHAT_PROMPT
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument('--input',required=True)
+    p.add_argument('--input',default=CURATED_DATASET)
+    p.add_argument('--require-curated',action='store_true',help='Validate English and body length screening before victim classification')
     p.add_argument('--label',choices=['0','1','all'],default='1',help='Gold label to include (default: 1; no sampling)')
     p.add_argument('--config',default='config/models.json')
-    p.add_argument('--output-dir',default='outputs/baseline')
+    p.add_argument('--output-dir',default=BASELINE_DIR)
     p.add_argument('--victims',nargs='*')
     p.add_argument('--base-url')
     p.add_argument('--decision-base-url',default='http://127.0.0.1:11435')
     p.add_argument('--checkpoint-every',type=int,default=25)
     p.add_argument('--dry-run',action='store_true')
     args=p.parse_args()
+    if not Path(args.input).is_file():p.error('Input does not exist: '+args.input+'; run RUN_CURATE_PPLX.bat to create the new curated dataset first.')
     print('Loading input:',args.input,flush=True)
     config=json.loads(Path(args.config).read_text());rows=read_dataset(args.input,label=args.label)
     if not rows:raise ValueError('No input rows match label filter: '+args.label)
+    if args.require_curated or args.input==CURATED_DATASET:validate_curated_rows(rows)
     print('Selected label',args.label,':',len(rows),'rows',flush=True)
     victims=[v for v in config['victims'] if v['id'] in args.victims] if args.victims else [v for v in config['victims'] if v.get('enabled',True)]
     if not victims:raise ValueError('No matching victims')

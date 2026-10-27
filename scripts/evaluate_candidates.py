@@ -8,13 +8,14 @@ import argparse,csv,hashlib,math,sys
 from collections import Counter
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from phishbench.workflow import CURATED_DATASET
 from phishbench.data import read_csv,read_dataset,atomic_csv
 from phishbench.analysis import mcnemar_exact
 from phishbench.quality import screen,tokens
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument('--dataset',required=True)
+    p.add_argument('--dataset',default=CURATED_DATASET)
     p.add_argument('--baseline',required=True,help='Victim baseline CSV')
     p.add_argument('--candidates',required=True,help='Manually reviewed offline records: row_id,method,candidate_text,review_status,final_prediction')
     p.add_argument('--output-dir',default='outputs/eval')

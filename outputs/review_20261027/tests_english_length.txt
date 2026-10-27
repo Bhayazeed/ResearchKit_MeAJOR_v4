@@ -1,0 +1,323 @@
+test_adapter_keeps_all_rows_and_metadata (test_full_dataset.TestFullDataset.test_adapter_keeps_all_rows_and_metadata) ... ok
+test_baseline_raw_input_and_metrics (test_full_dataset.TestFullDataset.test_baseline_raw_input_and_metrics) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpy3g5vrrc\raw.csv
+Selected label all : 4 rows
+Victim: test cached 0 of 4
+Finished test correct-class-1 pool 2 of 4
+ok
+test_pplx_interruption_resume_and_manifest (test_full_dataset.TestFullDataset.test_pplx_interruption_resume_and_manifest) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpq33yh4fx\raw.csv
+Loaded 4 rows; label all ; cached 0 ; provider ollama
+Checked 1 / 4 usable 1
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpq33yh4fx\raw.csv
+Loaded 4 rows; label all ; cached 1 ; provider ollama
+Checked 1 / 4 usable 1
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 4,
+  "accepted_n": 1,
+  "counts": {
+    "usable": 1,
+    "not_usable": 3
+  },
+  "accepted_labels": {
+    "0": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "all",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 4
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpq33yh4fx\raw.csv
+Loaded 4 rows; label all ; cached 4 ; provider ollama
+Checked 1 / 4 usable 1
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 4,
+  "accepted_n": 1,
+  "counts": {
+    "usable": 1,
+    "not_usable": 3
+  },
+  "accepted_labels": {
+    "0": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "all",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 4
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpq33yh4fx\raw.csv
+ok
+test_raw_langdetect_and_cached_language_fields (test_full_dataset.TestFullDataset.test_raw_langdetect_and_cached_language_fields) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpzhgo3l_0\raw.csv
+Loaded 4 rows; label all ; cached 0 ; provider langdetect
+Checked 1 / 4 usable 1
+{
+  "provider": "langdetect",
+  "model": "langdetect",
+  "cohort_n": 4,
+  "accepted_n": 3,
+  "counts": {
+    "usable": 3,
+    "not_usable": 1
+  },
+  "accepted_labels": {
+    "0": 1,
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "all",
+  "curation_policy": "readability",
+  "reasons": {
+    "language_only": 4
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpzhgo3l_0\raw.csv
+Loaded 4 rows; label all ; cached 4 ; provider langdetect
+Checked 1 / 4 usable 1
+{
+  "provider": "langdetect",
+  "model": "langdetect",
+  "cohort_n": 4,
+  "accepted_n": 3,
+  "counts": {
+    "usable": 3,
+    "not_usable": 1
+  },
+  "accepted_labels": {
+    "0": 1,
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "all",
+  "curation_policy": "readability",
+  "reasons": {
+    "language_only": 4
+  },
+  "min_body_words": null
+}
+ok
+test_binary_label (test_offline.TestMeAJOR.test_binary_label) ... ok
+test_prepare_and_quality (test_offline.TestMeAJOR.test_prepare_and_quality) ... ok
+test_chat_and_decision_share_phishing_task (test_phishing_policy.TestEnglishLengthPolicy.test_chat_and_decision_share_phishing_task) ... ok
+test_curated_handoff_baseline_metrics_and_resume (test_phishing_policy.TestEnglishLengthPolicy.test_curated_handoff_baseline_metrics_and_resume) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpv52f0c6c\raw.csv
+Loaded 2 rows; label 1 ; cached 0 ; provider ollama
+Checked 1 / 2 usable 0
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 1,
+  "counts": {
+    "not_usable": 1,
+    "usable": 1
+  },
+  "accepted_labels": {
+    "1": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 1
+  },
+  "min_body_words": 101
+}
+Common quality cohort: 1 labels {'1': 1}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpv52f0c6c\raw.csv
+Loaded 2 rows; label 1 ; cached 2 ; provider ollama
+Checked 1 / 2 usable 0
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 1,
+  "counts": {
+    "not_usable": 1,
+    "usable": 1
+  },
+  "accepted_labels": {
+    "1": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 1
+  },
+  "min_body_words": 101
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpv52f0c6c\raw.csv
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpv52f0c6c\curated\quality_accepted.csv
+Selected label 1 : 1 rows
+Victim: test cached 0 of 1
+Finished test correct-class-1 pool 0 of 1
+ok
+test_curator_judges_language_only (test_phishing_policy.TestEnglishLengthPolicy.test_curator_judges_language_only) ... ok
+test_legacy_readability_cannot_pass_curated_guard (test_phishing_policy.TestEnglishLengthPolicy.test_legacy_readability_cannot_pass_curated_guard) ... ok
+test_word_gate_uses_body_and_inclusive_threshold (test_phishing_policy.TestEnglishLengthPolicy.test_word_gate_uses_body_and_inclusive_threshold) ... ok
+test_baseline_label1_default (test_research_pipeline.TestResearchPipeline.test_baseline_label1_default) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp_j_zpf13\raw.csv
+Selected label 1 : 2 rows
+Victim: test cached 0 of 2
+Finished test correct-class-1 pool 2 of 2
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp_j_zpf13\raw.csv
+Selected label all : 4 rows
+Saved C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp_j_zpf13\metrics.csv
+ok
+test_checkpoint_recovers_torn_tail_and_rejects_corruption (test_research_pipeline.TestResearchPipeline.test_checkpoint_recovers_torn_tail_and_rejects_corruption) ... ok
+test_checkpoint_rejects_duplicate_ids (test_research_pipeline.TestResearchPipeline.test_checkpoint_rejects_duplicate_ids) ... ok
+test_compare_checks_hash_and_label (test_research_pipeline.TestResearchPipeline.test_compare_checks_hash_and_label) ... ok
+test_curation_label1_default_and_resume (test_research_pipeline.TestResearchPipeline.test_curation_label1_default_and_resume) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+Loaded 2 rows; label 1 ; cached 0 ; provider ollama
+Checked 1 / 2 usable 1
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 2
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+Loaded 2 rows; label 1 ; cached 2 ; provider ollama
+Checked 1 / 2 usable 1
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 2
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+Loaded 2 rows; label 1 ; cached 0 ; provider openrouter
+Checked 1 / 2 usable 1
+{
+  "provider": "openrouter",
+  "model": "typesafe/jev-1.14",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 2
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+Loaded 2 rows; label 1 ; cached 2 ; provider openrouter
+Checked 1 / 2 usable 1
+{
+  "provider": "openrouter",
+  "model": "typesafe/jev-1.14",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 2
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+Loaded 2 rows; label 1 ; cached 0 ; provider none
+Checked 1 / 2 usable 1
+{
+  "provider": "none",
+  "model": "none",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "not_evaluated": 2
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+Loaded 2 rows; label 1 ; cached 2 ; provider none
+Checked 1 / 2 usable 1
+{
+  "provider": "none",
+  "model": "none",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "not_evaluated": 2
+  },
+  "min_body_words": null
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6kenu9ug\raw.csv
+ok
+test_filter_preserves_ids_and_prepared_input (test_research_pipeline.TestResearchPipeline.test_filter_preserves_ids_and_prepared_input) ... ok
+test_freeze_all_accepted_label1_and_provenance (test_research_pipeline.TestResearchPipeline.test_freeze_all_accepted_label1_and_provenance) ... Common quality cohort: 2 labels {'1': 2}
+ok
+test_metrics_disclose_single_class_and_missing (test_research_pipeline.TestResearchPipeline.test_metrics_disclose_single_class_and_missing) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 2.940s
+
+OK

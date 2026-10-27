@@ -1,0 +1,10 @@
+{
+  "legacy_file": "outputs\\quality_pplx_label1\\quality_accepted.csv",
+  "counts": {
+    "legacy_accepted_rows": 31056,
+    "body_below_100_words": 12998,
+    "body_at_least_100_words": 18058,
+    "missing_new_curation_policy": 31056
+  },
+  "note": "Language and semantic phishing eligibility under the new policy have not been inferred from legacy acceptance."
+}
