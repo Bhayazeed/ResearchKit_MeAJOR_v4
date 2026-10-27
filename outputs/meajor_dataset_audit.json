@@ -1,0 +1,20 @@
+{
+  "counts": {
+    "body_500_chars": 72348,
+    "invalid_label": 1,
+    "label_0": 60650,
+    "label_1": 48034,
+    "placeholder_rows": 100192,
+    "source_language_en": 82175,
+    "total": 108685
+  },
+  "note": "The csv release observed, not the number of claimed original corpora",
+  "sources_by_label": {
+    "trec5|0": 29929,
+    "trec5|1": 19654,
+    "trec6|0": 11208,
+    "trec6|1": 3797,
+    "trec7|0": 19513,
+    "trec7|1": 24583
+  }
+}

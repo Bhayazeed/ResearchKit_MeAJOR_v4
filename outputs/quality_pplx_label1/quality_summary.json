@@ -1,0 +1,15 @@
+{
+  "accepted_labels": {
+    "1": 31056
+  },
+  "accepted_n": 31056,
+  "cohort_n": 48034,
+  "counts": {
+    "not_usable": 16978,
+    "usable": 31056
+  },
+  "label_filter": "1",
+  "model": "pplx-decider:latest",
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "provider": "ollama"
+}

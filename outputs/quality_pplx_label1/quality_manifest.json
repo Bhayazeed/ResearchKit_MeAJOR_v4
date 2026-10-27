@@ -1,0 +1,9 @@
+{
+  "base_url": "http://127.0.0.1:11435",
+  "input_adapter": "meajor_all_rows_v1",
+  "instruction_hash": "70f4beda9624b48194d94c472e1e26c849293c3ded0036856128016e83e866be",
+  "label_filter": "1",
+  "model": "pplx-decider:latest",
+  "provider": "ollama",
+  "source_sha256": "5bf5371897ab4e4aa7ac6d8f499869e6c32e4456ed09636731e4069947b69f4f"
+}
