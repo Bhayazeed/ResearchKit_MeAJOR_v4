@@ -1,0 +1,37 @@
+{
+  "base_url": "https://llms.si-lab.org",
+  "chat_model": "openai/gpt-oss-120b",
+  "checkpoint_import": {
+    "directory": "C:\\Users\\prase\\Downloads\\marifahmad\\ResearchKit_MeAJOR_v4\\outputs\\quality_pplx_english_length_v3",
+    "manifest_sha256": "0c63d3303585f58413f3b9d6aa18b85827aab93df030adf7062648fbf7dfffb5",
+    "previous_base_url": "http://127.0.0.1:11435",
+    "previous_model": "pplx-decider:latest",
+    "previous_provider": "ollama",
+    "same_decider_backend_confirmed_by_operator": true,
+    "snapshot_sha256": "dd80f27213f98b745ef29a2df16a312bd3c3f13dfd374bde258c661e22b50317"
+  },
+  "curation_policy": "english_length",
+  "input_adapter": "meajor_all_rows_v1",
+  "instruction_hash": "5ad935734cb285654870c97144d784bc164173788a70c04248547685c7b18554",
+  "label_filter": "1",
+  "model": "PPLX Decider Flash v1.2",
+  "policy_version": 3,
+  "prechecks": {
+    "language_judge": "decision_model",
+    "min_body_words": 101,
+    "model_chars": 20000,
+    "model_input": "body",
+    "word_pattern": "\\b[A-Za-z]+(?:'[A-Za-z]+)?\\b"
+  },
+  "provider": "openwebui",
+  "source_sha256": "5bf5371897ab4e4aa7ac6d8f499869e6c32e4456ed09636731e4069947b69f4f",
+  "tool_evidence_contract": "sources_ascii_whitespace_state_exact_questions_v3",
+  "tool_evidence_migration": {
+    "from": "sources_exact_state_questions_and_flat_wrapper_v2",
+    "previous_manifest_sha256": "1faaabc65b0649f5bc4ac59b20c16d170e88a707f8647d3b35404371bf71163a",
+    "reason": "Accept ASCII layout whitespace differences in state only; exact instructions/criteria and original source text preserved.",
+    "to": "sources_ascii_whitespace_state_exact_questions_v3"
+  },
+  "tool_id": "server:pplxdeciderflash",
+  "tool_routing_hash": "d8ed4729fd5bfc6ef0f13c2bd952dd5b59102da1810b70f05c4e6af4411b52fa"
+}

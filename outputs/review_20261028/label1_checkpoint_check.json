@@ -1,0 +1,14 @@
+{
+  "selected_rows": 48034,
+  "selected_labels": {
+    "1": 48034
+  },
+  "snapshot_checkpoint_rows": 43324,
+  "checkpoint_provider_counts": {
+    "precheck": 20347,
+    "ollama": 22977
+  },
+  "checkpoint_unknown_ids": 0,
+  "checkpoint_hash_mismatches": 0,
+  "note": "Read-only snapshot; no API requests or checkpoint writes."
+}

@@ -1,0 +1,677 @@
+test_auth_failure_is_not_retried_or_converted_to_a_decision (test_decider_api.TestDecisionAPI.test_auth_failure_is_not_retried_or_converted_to_a_decision) ... ok
+test_failed_smoke_test_reports_no_option (test_decider_api.TestDecisionAPI.test_failed_smoke_test_reports_no_option) ... ok
+test_invalid_response_and_auth_redirect_are_rejected (test_decider_api.TestDecisionAPI.test_invalid_response_and_auth_redirect_are_rejected) ... ok
+test_reset_and_timeout_retry_without_printing_key (test_decider_api.TestDecisionAPI.test_reset_and_timeout_retry_without_printing_key) ... ok
+test_smoke_test_reports_actual_choice_and_probability (test_decider_api.TestDecisionAPI.test_smoke_test_reports_actual_choice_and_probability) ... ok
+test_active_policy_rejects_label_override_before_requests (test_decider_api.TestRemoteCuration.test_active_policy_rejects_label_override_before_requests) ... ok
+test_only_length_prechecks_migrate_and_remote_run_resumes (test_decider_api.TestRemoteCuration.test_only_length_prechecks_migrate_and_remote_run_resumes) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6wm5px82\input.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 0 ; provider ollama
+Planning pending work for ETA...
+Checked 0/2 (0.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 1, local: 1 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 1/2 (50.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 1, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 2/2 (100.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:21 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:21 +0700
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 1,
+  "counts": {
+    "not_usable": 1,
+    "usable": 1
+  },
+  "accepted_labels": {
+    "1": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 1
+  },
+  "min_body_words": 101,
+  "annotation_providers": {
+    "precheck": 1,
+    "ollama": 1
+  },
+  "annotation_models": {
+    "pplx-decider:latest": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6wm5px82\input.csv
+Selected gold-label counts: {'1': 2}
+Imported length rejections: 1 ; imported model decisions: 0 ; previous model decisions eligible for reuse: 0
+Loaded 2 rows; label 1 ; cached 1 ; provider decider
+Planning pending work for ETA...
+Checked 1/2 (50.0%) | cached: 1 | session elapsed: 00:00:00 | pending model: 1, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 2/2 (100.0%) | cached: 1 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:21 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:21 +0700
+{
+  "provider": "decider",
+  "model": "remote-test",
+  "cohort_n": 2,
+  "accepted_n": 1,
+  "counts": {
+    "not_usable": 1,
+    "usable": 1
+  },
+  "accepted_labels": {
+    "1": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 1
+  },
+  "min_body_words": 101,
+  "annotation_providers": {
+    "precheck": 1,
+    "decider": 1
+  },
+  "annotation_models": {
+    "remote-test": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6wm5px82\input.csv
+Selected gold-label counts: {'1': 2}
+Imported length rejections: 0 ; imported model decisions: 0 ; previous model decisions eligible for reuse: 0
+Loaded 2 rows; label 1 ; cached 2 ; provider decider
+Planning pending work for ETA...
+Checked 2/2 (100.0%) | cached: 2 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:21 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:21 +0700
+{
+  "provider": "decider",
+  "model": "remote-test",
+  "cohort_n": 2,
+  "accepted_n": 1,
+  "counts": {
+    "not_usable": 1,
+    "usable": 1
+  },
+  "accepted_labels": {
+    "1": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 1
+  },
+  "min_body_words": 101,
+  "annotation_providers": {
+    "precheck": 1,
+    "decider": 1
+  },
+  "annotation_models": {
+    "remote-test": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp6wm5px82\input.csv
+Selected gold-label counts: {'1': 2}
+ok
+test_adapter_keeps_all_rows_and_metadata (test_full_dataset.TestFullDataset.test_adapter_keeps_all_rows_and_metadata) ... ok
+test_baseline_raw_input_and_metrics (test_full_dataset.TestFullDataset.test_baseline_raw_input_and_metrics) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp0498xt4o\raw.csv
+Selected label all : 4 rows
+Victim: test cached 0 of 4
+Finished test correct-class-1 pool 2 of 4
+ok
+test_pplx_interruption_resume_and_manifest (test_full_dataset.TestFullDataset.test_pplx_interruption_resume_and_manifest) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp9sjzt8ug\raw.csv
+Selected gold-label counts: {'0': 1, '': 1, '1': 2}
+Loaded 4 rows; label all ; cached 0 ; provider ollama
+Planning pending work for ETA...
+Checked 0/4 (0.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 4, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 1/4 (25.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 3, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:22 +0700 (excludes final CSV export)
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp9sjzt8ug\raw.csv
+Selected gold-label counts: {'0': 1, '': 1, '1': 2}
+Loaded 4 rows; label all ; cached 1 ; provider ollama
+Planning pending work for ETA...
+Checked 1/4 (25.0%) | cached: 1 | session elapsed: 00:00:00 | pending model: 3, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 2/4 (50.0%) | cached: 1 | session elapsed: 00:00:00 | pending model: 2, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:22 +0700 (excludes final CSV export)
+Checked 4/4 (100.0%) | cached: 1 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:22 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:22 +0700
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 4,
+  "accepted_n": 1,
+  "counts": {
+    "usable": 1,
+    "not_usable": 3
+  },
+  "accepted_labels": {
+    "0": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "all",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 4
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "ollama": 4
+  },
+  "annotation_models": {
+    "pplx-decider:latest": 4
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp9sjzt8ug\raw.csv
+Selected gold-label counts: {'0': 1, '': 1, '1': 2}
+Loaded 4 rows; label all ; cached 4 ; provider ollama
+Planning pending work for ETA...
+Checked 4/4 (100.0%) | cached: 4 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:22 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:22 +0700
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 4,
+  "accepted_n": 1,
+  "counts": {
+    "usable": 1,
+    "not_usable": 3
+  },
+  "accepted_labels": {
+    "0": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "all",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 4
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "ollama": 4
+  },
+  "annotation_models": {
+    "pplx-decider:latest": 4
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp9sjzt8ug\raw.csv
+Selected gold-label counts: {'0': 1, '': 1, '1': 2}
+ok
+test_raw_langdetect_and_cached_language_fields (test_full_dataset.TestFullDataset.test_raw_langdetect_and_cached_language_fields) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp50yqyxxv\raw.csv
+Selected gold-label counts: {'0': 1, '': 1, '1': 2}
+Loaded 4 rows; label all ; cached 0 ; provider langdetect
+Planning pending work for ETA...
+Checked 0/4 (0.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 4 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 1/4 (25.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 3 | ETA: 00:00:01 | estimated annotation finish: 2026-10-28 14:03:23 +0700 (excludes final CSV export)
+Checked 4/4 (100.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:22 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:22 +0700
+{
+  "provider": "langdetect",
+  "model": "langdetect",
+  "cohort_n": 4,
+  "accepted_n": 3,
+  "counts": {
+    "usable": 3,
+    "not_usable": 1
+  },
+  "accepted_labels": {
+    "0": 1,
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "all",
+  "curation_policy": "readability",
+  "reasons": {
+    "language_only": 4
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "langdetect": 4
+  },
+  "annotation_models": {
+    "langdetect": 4
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmp50yqyxxv\raw.csv
+Selected gold-label counts: {'0': 1, '': 1, '1': 2}
+Loaded 4 rows; label all ; cached 4 ; provider langdetect
+Planning pending work for ETA...
+Checked 4/4 (100.0%) | cached: 4 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:22 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:22 +0700
+{
+  "provider": "langdetect",
+  "model": "langdetect",
+  "cohort_n": 4,
+  "accepted_n": 3,
+  "counts": {
+    "usable": 3,
+    "not_usable": 1
+  },
+  "accepted_labels": {
+    "0": 1,
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "all",
+  "curation_policy": "readability",
+  "reasons": {
+    "language_only": 4
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "langdetect": 4
+  },
+  "annotation_models": {
+    "langdetect": 4
+  }
+}
+ok
+test_binary_label (test_offline.TestMeAJOR.test_binary_label) ... ok
+test_prepare_and_quality (test_offline.TestMeAJOR.test_prepare_and_quality) ... ok
+test_actual_server_wrapper_response_preserves_probability_and_provenance (test_openwebui_decider.TestWebUIToolEvidence.test_actual_server_wrapper_response_preserves_probability_and_provenance) ... ok
+test_chat_only_unexecuted_calls_wrong_tool_and_modified_input_fail (test_openwebui_decider.TestWebUIToolEvidence.test_chat_only_unexecuted_calls_wrong_tool_and_modified_input_fail) ... ok
+test_flat_wrapper_maps_quality_question_without_changing_eligibility (test_openwebui_decider.TestWebUIToolEvidence.test_flat_wrapper_maps_quality_question_without_changing_eligibility) ... ok
+test_flat_wrapper_rejects_changed_inputs_ambiguous_answers_and_multiple_questions (test_openwebui_decider.TestWebUIToolEvidence.test_flat_wrapper_rejects_changed_inputs_ambiguous_answers_and_multiple_questions) ... ok
+test_resume_same_backend_preserves_model_decisions_and_only_calls_remaining (test_openwebui_decider.TestWebUIToolEvidence.test_resume_same_backend_preserves_model_decisions_and_only_calls_remaining) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpw294217h\input.csv
+Selected gold-label counts: {'1': 3}
+Loaded 3 rows; label 1 ; cached 0 ; provider ollama
+Planning pending work for ETA...
+Checked 0/3 (0.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 2, local: 1 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 1/3 (33.3%) | cached: 0 | session elapsed: 00:00:00 | pending model: 2, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 2/3 (66.7%) | cached: 0 | session elapsed: 00:00:00 | pending model: 1, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:23 +0700 (excludes final CSV export)
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpw294217h\input.csv
+Selected gold-label counts: {'1': 3}
+Imported length rejections: 1 ; imported model decisions: 1 ; previous model decisions eligible for reuse: 1
+Loaded 3 rows; label 1 ; cached 2 ; provider openwebui
+Planning pending work for ETA...
+Checked 2/3 (66.7%) | cached: 2 | session elapsed: 00:00:00 | pending model: 1, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 3/3 (100.0%) | cached: 2 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:23 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:23 +0700
+{
+  "provider": "openwebui",
+  "model": "PPLX Decider Flash v1.2",
+  "cohort_n": 3,
+  "accepted_n": 2,
+  "counts": {
+    "not_usable": 1,
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 2
+  },
+  "min_body_words": 101,
+  "annotation_providers": {
+    "precheck": 1,
+    "ollama": 1,
+    "openwebui": 1
+  },
+  "annotation_models": {
+    "PPLX Decider Flash v1.2": 2,
+    "pplx-decider:latest": 1
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpw294217h\input.csv
+Selected gold-label counts: {'1': 3}
+Imported length rejections: 0 ; imported model decisions: 0 ; previous model decisions eligible for reuse: 1
+Loaded 3 rows; label 1 ; cached 3 ; provider openwebui
+Planning pending work for ETA...
+Checked 3/3 (100.0%) | cached: 3 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:23 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:23 +0700
+{
+  "provider": "openwebui",
+  "model": "PPLX Decider Flash v1.2",
+  "cohort_n": 3,
+  "accepted_n": 2,
+  "counts": {
+    "not_usable": 1,
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 2
+  },
+  "min_body_words": 101,
+  "annotation_providers": {
+    "precheck": 1,
+    "ollama": 1,
+    "openwebui": 1
+  },
+  "annotation_models": {
+    "PPLX Decider Flash v1.2": 2,
+    "pplx-decider:latest": 1
+  }
+}
+ok
+test_saved_server_response_passes_complete_smoke_test_without_network (test_openwebui_decider.TestWebUIToolEvidence.test_saved_server_response_passes_complete_smoke_test_without_network) ... ok
+test_uses_verified_tool_result_and_exact_example_transport (test_openwebui_decider.TestWebUIToolEvidence.test_uses_verified_tool_result_and_exact_example_transport) ... ok
+test_completion_and_fully_cached_resume_need_no_timing_samples (test_phishing_policy.TestCurationETA.test_completion_and_fully_cached_resume_need_no_timing_samples) ... ok
+test_resume_and_fast_prechecks_do_not_inflate_model_speed (test_phishing_policy.TestCurationETA.test_resume_and_fast_prechecks_do_not_inflate_model_speed) ... ok
+test_chat_and_decision_share_phishing_task (test_phishing_policy.TestEnglishLengthPolicy.test_chat_and_decision_share_phishing_task) ... ok
+test_curated_handoff_baseline_metrics_and_resume (test_phishing_policy.TestEnglishLengthPolicy.test_curated_handoff_baseline_metrics_and_resume) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpc2ry0fcx\raw.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 0 ; provider ollama
+Planning pending work for ETA...
+Checked 0/2 (0.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 1, local: 1 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 1/2 (50.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 1, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 2/2 (100.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:23 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:23 +0700
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 1,
+  "counts": {
+    "not_usable": 1,
+    "usable": 1
+  },
+  "accepted_labels": {
+    "1": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 1
+  },
+  "min_body_words": 101,
+  "annotation_providers": {
+    "precheck": 1,
+    "ollama": 1
+  },
+  "annotation_models": {
+    "pplx-decider:latest": 2
+  }
+}
+Common quality cohort: 1 labels {'1': 1}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpc2ry0fcx\raw.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 2 ; provider ollama
+Planning pending work for ETA...
+Checked 2/2 (100.0%) | cached: 2 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:23 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:23 +0700
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 1,
+  "counts": {
+    "not_usable": 1,
+    "usable": 1
+  },
+  "accepted_labels": {
+    "1": 1
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "english_length",
+  "reasons": {
+    "body_too_short": 1,
+    "english_length_passed": 1
+  },
+  "min_body_words": 101,
+  "annotation_providers": {
+    "precheck": 1,
+    "ollama": 1
+  },
+  "annotation_models": {
+    "pplx-decider:latest": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpc2ry0fcx\raw.csv
+Selected gold-label counts: {'1': 2}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpc2ry0fcx\curated\quality_accepted.csv
+Selected label 1 : 1 rows
+Victim: test cached 0 of 1
+Finished test correct-class-1 pool 0 of 1
+ok
+test_curator_judges_language_only (test_phishing_policy.TestEnglishLengthPolicy.test_curator_judges_language_only) ... ok
+test_legacy_readability_cannot_pass_curated_guard (test_phishing_policy.TestEnglishLengthPolicy.test_legacy_readability_cannot_pass_curated_guard) ... ok
+test_word_gate_uses_body_and_inclusive_threshold (test_phishing_policy.TestEnglishLengthPolicy.test_word_gate_uses_body_and_inclusive_threshold) ... ok
+test_baseline_label1_default (test_research_pipeline.TestResearchPipeline.test_baseline_label1_default) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmprrak164c\raw.csv
+Selected label 1 : 2 rows
+Victim: test cached 0 of 2
+Finished test correct-class-1 pool 2 of 2
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmprrak164c\raw.csv
+Selected label all : 4 rows
+Saved C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmprrak164c\metrics.csv
+ok
+test_checkpoint_recovers_torn_tail_and_rejects_corruption (test_research_pipeline.TestResearchPipeline.test_checkpoint_recovers_torn_tail_and_rejects_corruption) ... ok
+test_checkpoint_rejects_duplicate_ids (test_research_pipeline.TestResearchPipeline.test_checkpoint_rejects_duplicate_ids) ... ok
+test_compare_checks_hash_and_label (test_research_pipeline.TestResearchPipeline.test_compare_checks_hash_and_label) ... ok
+test_curation_label1_default_and_resume (test_research_pipeline.TestResearchPipeline.test_curation_label1_default_and_resume) ... Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 0 ; provider ollama
+Planning pending work for ETA...
+Checked 0/2 (0.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 2, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 1/2 (50.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 1, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Checked 2/2 (100.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:24 +0700
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 2
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "ollama": 2
+  },
+  "annotation_models": {
+    "pplx-decider:latest": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 2 ; provider ollama
+Planning pending work for ETA...
+Checked 2/2 (100.0%) | cached: 2 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:24 +0700
+{
+  "provider": "ollama",
+  "model": "pplx-decider:latest",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 2
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "ollama": 2
+  },
+  "annotation_models": {
+    "pplx-decider:latest": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'0': 1, '1': 2, '': 1}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 0 ; provider openrouter
+Planning pending work for ETA...
+Checked 0/2 (0.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 2, local: 0 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 1/2 (50.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 1, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Checked 2/2 (100.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:24 +0700
+{
+  "provider": "openrouter",
+  "model": "typesafe/jev-1.14",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 2
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "openrouter": 2
+  },
+  "annotation_models": {
+    "typesafe/jev-1.14": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 2 ; provider openrouter
+Planning pending work for ETA...
+Checked 2/2 (100.0%) | cached: 2 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:24 +0700
+{
+  "provider": "openrouter",
+  "model": "typesafe/jev-1.14",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "readability_only": 2
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "openrouter": 2
+  },
+  "annotation_models": {
+    "typesafe/jev-1.14": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'0': 1, '1': 2, '': 1}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 0 ; provider none
+Planning pending work for ETA...
+Checked 0/2 (0.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 2 | ETA: collecting timing samples | estimated annotation finish: unknown (excludes final CSV export)
+Checked 1/2 (50.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 1 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Checked 2/2 (100.0%) | cached: 0 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:24 +0700
+{
+  "provider": "none",
+  "model": "none",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "not_evaluated": 2
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "none": 2
+  },
+  "annotation_models": {
+    "none": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'1': 2}
+Loaded 2 rows; label 1 ; cached 2 ; provider none
+Planning pending work for ETA...
+Checked 2/2 (100.0%) | cached: 2 | session elapsed: 00:00:00 | pending model: 0, local: 0 | ETA: 00:00:00 | estimated annotation finish: 2026-10-28 14:03:24 +0700 (excludes final CSV export)
+Annotation complete; exporting audit, accepted CSV and summary...
+Curation and export finished: 2026-10-28 14:03:24 +0700
+{
+  "provider": "none",
+  "model": "none",
+  "cohort_n": 2,
+  "accepted_n": 2,
+  "counts": {
+    "usable": 2
+  },
+  "accepted_labels": {
+    "1": 2
+  },
+  "note": "Decision quality scores do not replace original MeAJOR labels. The fixed cohort CSV is unchanged.",
+  "label_filter": "1",
+  "curation_policy": "readability",
+  "reasons": {
+    "not_evaluated": 2
+  },
+  "min_body_words": null,
+  "annotation_providers": {
+    "none": 2
+  },
+  "annotation_models": {
+    "none": 2
+  }
+}
+Loading input: C:\Users\prase\Downloads\marifahmad\ResearchKit_MeAJOR_v4\tmpryxzcpyl\raw.csv
+Selected gold-label counts: {'0': 1, '1': 2, '': 1}
+ok
+test_filter_preserves_ids_and_prepared_input (test_research_pipeline.TestResearchPipeline.test_filter_preserves_ids_and_prepared_input) ... ok
+test_freeze_all_accepted_label1_and_provenance (test_research_pipeline.TestResearchPipeline.test_freeze_all_accepted_label1_and_provenance) ... Common quality cohort: 2 labels {'1': 2}
+ok
+test_metrics_disclose_single_class_and_missing (test_research_pipeline.TestResearchPipeline.test_metrics_disclose_single_class_and_missing) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 2.833s
+
+OK

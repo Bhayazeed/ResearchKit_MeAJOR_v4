@@ -1,5 +1,22 @@
 # Validation status
 
+## Observed Open WebUI wrapper response (2026-10-28)
+
+- The user's saved synthetic test response contains an executed `server:pplxdeciderflash/classify_with_pplx_decider` tool result. The initial parser incorrectly required a systemone operation name and nested question arguments, so it rejected this successful call.
+- Added exact support for the observed flat state/instructions/criteria arguments and `answers.decision`. Only the question key is normalized to department/quality; model choices and scores are preserved. Raw tool-result hashes retain provenance before normalization. Altered inputs, missing execution evidence and ambiguous results still fail.
+- The saved tool result selects technical, probability 0.9991184698158921, confidence 0.9986777047238382. These are results from the user's server response, not a locally inferred answer. The saved response now passes the complete smoke-test flow when replayed offline.
+- 35 tests passed, including a fixture from the observed server tool metadata and rejection cases. Evidence: `tests/fixtures/openwebui_pplx_wrapped.json` and `outputs/review_20261028/tests_decider_wrapper.txt`. No new authenticated request or full remote curation was run by the assistant during this repair.
+
+## Open WebUI PPLX transport and resume (2026-10-28)
+
+- Added the user's example transport: `https://llms.si-lab.org/api/chat/completions`, `openai/gpt-oss-120b`, `server:pplxdeciderflash`, legacy function calling. Only structured server tool results with matching state/questions are accepted; chat prose is never used as a decision fallback.
+- `RUN_CURATE_PPLX_OPENWEBUI.ps1` reads the API key from a hidden prompt or `OPENWEBUI_API_KEY`, runs the synthetic department-routing test first, then resumes label-1 English/length curation in a separate output directory. It does not change baseline victim endpoints.
+- The user confirmed that old and new routes use the same PPLX backend. Checkpoint import records this as operator confirmation, preserves original annotation provider/model, validates source/policy/hash, and freezes the imported snapshot. This is not independent verification of model weights/version identity. A separate precheck-only import and direct authenticated endpoint option are available.
+- Transient connection reset, timeout and selected HTTP errors retry with bounded backoff. Authentication failures stop; exhausted errors never become quality rejections. No bearer credential is written to manifests or CLI arguments.
+- 31 offline tests passed, including exact tool-result extraction, rejecting changed input/chat-only results, label filtering, retry, and both checkpoint import modes. Evidence: `outputs/review_20261028/tests_decider_api.txt`.
+- A read-only checkpoint snapshot contained 43,324 rows, all matching source label-1 IDs and hashes (20,347 local length rejections and 22,977 model decisions). This was a point-in-time check, not a statement of final completion. Evidence: `outputs/review_20261028/label1_checkpoint_check.json`.
+- Live authenticated Open WebUI testing has not run: no key was supplied to this session. No department choice/probability or full remote-curation success is claimed. Server tool metadata/schema compatibility remains to be confirmed by the synthetic smoke test.
+
 ## Corrected curator/victim roles (2026-10-27)
 
 - Supersedes the strict-curation proposal below. The active policy is `english_length`: code checks more than 100 alphabetic body words (minimum 101); the decision model checks English only. No phishing, legitimacy, reputation, or separate readability gate is used. No langdetect score threshold is applied.

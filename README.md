@@ -189,6 +189,112 @@ outputs/
 
 Daftar ini adalah hasil yang akan dibuat oleh perintah di atas, bukan pernyataan bahwa inference sudah selesai. Pipeline utama selesai saat kurasi lengkap, semua baseline yang dipilih lengkap, lalu metrik dan laporan metadata berhasil dibuat untuk cohort yang sama. Tahap kandidat bersifat opsional. Untuk Linux/macOS, launcher `.sh` dengan nama yang sama tersedia; loop laporan di atas menggunakan PowerShell.
 
+## Melanjutkan kurasi lewat Open WebUI dosen (jalur yang dipilih)
+
+Launcher ini mengikuti `openwebui_api_test (1).py` yang diberikan pengguna:
+
+| Pengaturan | Nilai |
+| --- | --- |
+| URL | `https://llms.si-lab.org/api/chat/completions` |
+| Model pemanggil tool di SGLang | `openai/gpt-oss-120b` |
+| Tool penentu keputusan | `server:pplxdeciderflash`, operasi server `classify_with_pplx_decider` (format `systemone` langsung juga didukung) |
+| Mode Open WebUI | `params.function_calling=legacy`, `stream=false` |
+| Kredensial | API key akun Open WebUI; environment `OPENWEBUI_API_KEY` atau prompt tersembunyi |
+| Checkpoint sumber | `outputs/quality_pplx_english_length_v3/` |
+| Keluaran lanjutan | `outputs/quality_pplx_openwebui_english_length_v3/` |
+
+**Hentikan proses kurasi lama sebelum berpindah jalur**, lalu jalankan dari PowerShell di folder project:
+
+```powershell
+.\RUN_CURATE_PPLX_OPENWEBUI.ps1
+```
+
+API key diminta melalui input tersembunyi; jangan taruh key di chat atau source. Jika `OPENWEBUI_API_KEY` sudah tersedia di environment, launcher menggunakannya. Key yang dimasukkan melalui prompt dibersihkan dari environment launcher setelah proses selesai. Default timeout adalah 300 detik per percobaan dengan maksimum 5 percobaan untuk gangguan sementara. HTTP 401/403 langsung dihentikan agar izin/key dapat diperbaiki.
+
+Alur launcher:
+
+1. `scripts/check_decider.py --transport openwebui` mengirim contoh HTTP 401 dari pengguna. GPT-OSS diminta memanggil `systemone`, bukan memilih departemen sendiri. Respons uji sintetis disimpan di `outputs/openwebui_decider_connection_test.json` jika server memberikan respons JSON.
+2. Adapter mengambil hasil dari `sources` yang ditandai sebagai hasil tool PPLX. Respons server yang sudah diamati memakai `server:pplxdeciderflash/classify_with_pplx_decider`, dengan argumen datar `state`, `instructions`, `criteria` dan jawaban `answers.decision`. Script memverifikasi ketiga argumen tersebut sama persis dengan permintaan, kemudian memetakan kunci `decision` ke `department` pada uji atau `quality` pada kurasi; nilai pilihan, probability dan confidence tidak diubah. Format operasi `systemone` dengan `state/questions` juga didukung. Teks jawaban GPT-OSS, tool call yang belum dieksekusi, argumen yang diubah, hasil error, atau hasil tanpa bukti tool tidak diterima. Jika pemeriksaan gagal, dataset belum dikirim dan tidak ada pilihan departemen yang ditebak.
+3. Jika uji berhasil, kurasi membaca hanya label 1. Body <101 kata ditolak lokal. Untuk body yang cukup panjang, GPT-OSS hanya meneruskan tugas bahasa Inggris ke PPLX. Keputusan disimpan dari hasil PPLX, beserta identitas pemanggil tool dan hash argumen/hasil tool.
+4. **Pengguna mengonfirmasi kedua jalur menggunakan backend PPLX yang sama.** Atas dasar itu, launcher memakai `--resume-from ... --same-decider-backend` untuk mempertahankan keputusan lama. Manifest mencatat konfirmasi operator, endpoint/model sebelumnya dan hash snapshot checkpoint; ini bukan verifikasi independen kesamaan bobot model. Label provider/model pada keputusan lama tetap dipertahankan, bukan diubah menjadi panggilan Open WebUI.
+5. Snapshot tetap dari checkpoint lama dibuat pada pemakaian pertama di `imported_checkpoint.snapshot.jsonl`. Hanya baris yang belum selesai yang diproses. Rerun launcher yang sama melanjutkan checkpoint pada folder Open WebUI. Jangan hapus snapshot atau manifest yang diperlukan untuk resume.
+
+Dokumentasi [Open WebUI: server-side tool calling](https://docs.openwebui.com/reference/server-side-tool-calling/#path-b-one-request-answer-in-the-body) menjelaskan respons mode legacy dengan field `sources`. Versi server tetap perlu diuji; jika struktur metadata berbeda atau bukti tool tidak dikembalikan, script berhenti dengan pesan yang jelas. Jangan menafsirkan jawaban chat sebagai pengganti hasil Decider. Jika terjadi error HTTP sebelum respons diterima, file respons uji mungkin tidak ada atau masih berasal dari uji sebelumnya; gunakan status exit/error percobaan terbaru.
+
+Contoh mengganti waktu tunggu, atau menguji koneksi saja jika environment key sudah diisi:
+
+```powershell
+.\RUN_CURATE_PPLX_OPENWEBUI.ps1 -TimeoutSeconds 600 -RequestAttempts 5
+python scripts/check_decider.py --transport openwebui --response-output outputs/openwebui_decider_connection_test.json
+```
+
+Untuk memakai hasil lanjutan pada baseline, gunakan path eksplisit agar tidak kembali membaca folder lokal:
+
+```powershell
+$PipelinePython = if (Test-Path '.venv/Scripts/python.exe') { '.venv/Scripts/python.exe' } else { 'python' }
+$WebUIDataset = 'outputs/quality_pplx_openwebui_english_length_v3/quality_accepted.csv'
+$WebUIBaseline = 'outputs/curated_openwebui_english_length_baseline'
+& $PipelinePython scripts/run_baseline.py --input $WebUIDataset --require-curated --label 1 --output-dir $WebUIBaseline --dry-run
+& $PipelinePython scripts/run_baseline.py --input $WebUIDataset --require-curated --label 1 --output-dir $WebUIBaseline
+& $PipelinePython scripts/baseline_metrics.py --dataset $WebUIDataset --dir $WebUIBaseline --output "$WebUIBaseline/metrics.csv"
+```
+
+Baseline victim masih memakai endpoint yang dikonfigurasi di pipeline baseline; perubahan ini memindahkan koneksi **kurasi**. Gunakan `--dataset $WebUIDataset` pada laporan metadata dan analisis kandidat yang memakai cohort ini. Jika ternyata backend lama berbeda, jangan gunakan konfirmasi kesamaan: jalankan script Python dengan `--resume-prechecks-from` untuk memakai kembali penolakan panjang saja, dalam output directory baru.
+
+## Alternatif: endpoint PPLX langsung dengan API key
+
+File contoh `openwebui_api_test (1).py` memakai `https://llms.si-lab.org/api/chat/completions`, model GPT-OSS dan `tool_ids=["server:pplxdeciderflash"]`. Itu adalah permintaan chat dengan tool yang diaktifkan, bukan URL langsung Decider. Keberadaan tool ID tidak membuktikan bahwa `/v1/systemone` tersedia pada host Open WebUI yang sama. [Dokumentasi Open WebUI](https://docs.openwebui.com/reference/api-endpoints/) membedakan pemanggilan chat dengan tool server; route dan izin pada instalasi server tetap perlu dikonfirmasi.
+
+Provider alternatif `decider` menggunakan **respons terstruktur `systemone` langsung**, tanpa GPT-OSS sebagai pemanggil tool. Ini memerlukan informasi tambahan dan bukan launcher Open WebUI di atas. Siapkan dari administrator server:
+
+- URL lengkap HTTPS endpoint yang berakhir `/systemone` (termasuk prefix seperti `/v1` jika diperlukan).
+- ID model yang benar untuk payload API PPLX Decider Flash v1.2; nama tampilan atau tag model lokal belum tentu sama dengan ID server.
+- Bearer API key yang memang diberi akses ke endpoint tersebut. Key akun Open WebUI tidak otomatis berlaku pada backend PPLX terpisah.
+
+Jalankan dari PowerShell:
+
+```powershell
+.\RUN_CURATE_PPLX_API.ps1
+```
+
+Launcher menanyakan URL, ID model, dan API key dengan input key tersembunyi. Key tidak disimpan dalam source, manifest atau argumen command line; key yang dimasukkan melalui prompt dibersihkan dari environment launcher setelah selesai. Jika ingin menyiapkan sendiri, launcher juga membaca `PPLX_SYSTEMONE_URL`, `PPLX_MODEL_ID` dan `PPLX_API_KEY` dari environment. Jangan menempelkan key di README atau chat. Endpoint HTTPS dipakai sebagaimana diberikan, tanpa mengikuti redirect yang dapat meneruskan kredensial ke lokasi lain.
+
+Urutan launcher API:
+
+1. `scripts/check_decider.py` mengirim contoh pelanggan mendapat HTTP 401 setelah rotasi credential ke `systemone`. Opsi technical/billing/sales dikirim sebagai criteria. Script melaporkan pilihan Decider, probability jika tersedia, dan confidence secara terpisah; tidak menentukan departemen sendiri. Respons chat, jawaban tidak valid, atau error autentikasi menghentikan launcher sebelum dataset dikirim.
+2. `scripts/curate_meajor.py --provider decider --label 1 --policy english_length --min-words 101` memproses cohort label 1. Policy ini menolak override `--label 0` atau `--label all`.
+3. Secara default, penolakan panjang teks dari `outputs/quality_pplx_english_length_v3` diimpor jika manifest dan checkpoint tersedia. `--resume-prechecks-from` memverifikasi kesamaan sumber dan aturan, mengecek hash baris, dan menghitung ulang keputusan panjang secara lokal. File lama tidak diubah. **Keputusan model lama tidak diimpor** karena endpoint/model berbeda; baris tersebut dinilai ulang oleh model server. Ini melanjutkan pekerjaan yang dapat digunakan kembali, bukan menyatakan dua model identik.
+4. Hasil baru tersimpan di `outputs/quality_pplx_remote_english_length_v3/`. Rerun launcher dengan URL, model, sumber, folder impor dan output yang sama akan melanjutkan seluruh keputusan remote yang sudah tersimpan. Tidak perlu mengulang baris yang sudah selesai pada endpoint remote tersebut.
+
+Launcher memakai maksimum 5 percobaan per baris, dengan backoff 1, 2, 4, 8 detik dan timeout 180 detik per percobaan. Connection reset, timeout dan HTTP sementara seperti 429/502/503/504 di-retry. HTTP 401/403 tidak di-retry; periksa key/izin. Percobaan ulang setelah timeout dapat mengulang pekerjaan di server meskipun hasil belum diterima client. Setelah retry habis, proses berhenti dan mempertahankan checkpoint; tidak mencatat error sebagai penolakan bahasa. Untuk launcher lokal, retry yang sama tersedia dengan default 3 percobaan.
+
+Contoh mengatur waktu tunggu tanpa mengubah aturan kurasi:
+
+```powershell
+.\RUN_CURATE_PPLX_API.ps1 -TimeoutSeconds 300 -RequestAttempts 5
+```
+
+Untuk menguji hanya koneksi setelah environment diisi, tanpa menjalankan kurasi:
+
+```powershell
+python scripts/check_decider.py
+```
+
+Jika URL `systemone` tidak dapat diakses langsung dan server hanya menyediakan tool melalui Open WebUI, minta route proxy yang disetujui administrator atau schema tool/API yang terpasang. Jangan menebak route ataupun menggunakan teks jawaban GPT-OSS sebagai hasil PPLX. Integrasi langsung belum terverifikasi pada server pengguna sampai URL, model, key dan schema respons berhasil diuji.
+
+Sesudah kurasi API lengkap, pilih **dataset remote yang sama** untuk baseline dan seluruh analisis. Launcher baseline lama tetap mengarah ke hasil lokal, sehingga gunakan perintah eksplisit berikut (victim tetap memakai endpoint pada konfigurasi baseline saat ini):
+
+```powershell
+$PipelinePython = if (Test-Path '.venv/Scripts/python.exe') { '.venv/Scripts/python.exe' } else { 'python' }
+$RemoteDataset = 'outputs/quality_pplx_remote_english_length_v3/quality_accepted.csv'
+$RemoteBaseline = 'outputs/curated_remote_english_length_baseline'
+& $PipelinePython scripts/run_baseline.py --input $RemoteDataset --require-curated --label 1 --output-dir $RemoteBaseline --dry-run
+& $PipelinePython scripts/run_baseline.py --input $RemoteDataset --require-curated --label 1 --output-dir $RemoteBaseline
+& $PipelinePython scripts/baseline_metrics.py --dataset $RemoteDataset --dir $RemoteBaseline --output "$RemoteBaseline/metrics.csv"
+```
+
+Gunakan juga `--dataset $RemoteDataset` pada `analyze_metadata.py`, `evaluate_candidates.py` dan `evaluate_similarity.py` jika menganalisis cohort remote.
+
 ## Existing PPLX output is a different policy
 
 `outputs/quality_pplx_label1` is retained as a historical readability-only run: 48,034 examined and 31,056 accepted. Its executed prompt did not enforce the current English and body-length requirements. Of those 31,056 accepted records, 12,998 have fewer than 100 body words under the existing word-count definition; records with exactly 100 words also fail the current rule. The old data remain available, but their acceptance flags alone do not prove eligibility. The new run screens all source label-1 rows, including old rejections, in a separate directory. No historical output is overwritten or relabeled.

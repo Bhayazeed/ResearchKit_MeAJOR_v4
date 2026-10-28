@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "document": [
+        "{\n  \"answers\": {\n    \"decision\": {\n      \"type\": \"choice\",\n      \"probabilities\": {\n        \"technical\": 0.9991184698158921,\n        \"billing\": 0.0005409221493046541,\n        \"sales\": 0.00034060803480321457\n      },\n      \"choice\": \"technical\",\n      \"confidence\": 0.9986777047238382\n    }\n  },\n  \"usage\": {\n    \"input_tokens\": 116,\n    \"output_tokens\": 0,\n    \"sequences\": 1\n  }\n}"
+      ],
+      "metadata": [
+        {
+          "parameters": {
+            "criteria": {
+              "billing": "Payments, refunds, and invoices",
+              "sales": "Product purchases and upgrades",
+              "technical": "API authentication and integration errors"
+            },
+            "instructions": "Which department should handle the issue?",
+            "state": "A customer reports HTTP 401 errors after rotating their API credentials."
+          },
+          "source": "server:pplxdeciderflash/classify_with_pplx_decider"
+        }
+      ],
+      "source": {
+        "name": "server:pplxdeciderflash/classify_with_pplx_decider"
+      },
+      "tool_result": true
+    }
+  ],
+  "choices": [
+    {
+      "message": {
+        "content": "Ignored assistant text; only sources are used."
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "base_url": "http://127.0.0.1:11435",
+  "curation_policy": "english_length",
+  "input_adapter": "meajor_all_rows_v1",
+  "instruction_hash": "5ad935734cb285654870c97144d784bc164173788a70c04248547685c7b18554",
+  "label_filter": "1",
+  "model": "pplx-decider:latest",
+  "policy_version": 3,
+  "prechecks": {
+    "language_judge": "decision_model",
+    "min_body_words": 101,
+    "model_chars": 20000,
+    "model_input": "body",
+    "word_pattern": "\\b[A-Za-z]+(?:'[A-Za-z]+)?\\b"
+  },
+  "provider": "ollama",
+  "source_sha256": "5bf5371897ab4e4aa7ac6d8f499869e6c32e4456ed09636731e4069947b69f4f"
+}

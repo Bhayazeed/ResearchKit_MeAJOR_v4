@@ -1,0 +1,49 @@
+{
+  "checkpoint_preserved": true,
+  "diagnostics": {
+    "attempts": 3,
+    "failures": [
+      {
+        "changed_fields": {
+          "state": {
+            "actual_characters": 1852,
+            "actual_sha256": "97c15a58ab4dfd6f290374bc831ee3c7cc21878715d7100953e5e3eee285aa50",
+            "expected_characters": 1870,
+            "expected_sha256": "37c177891036103e849c5237a193c7468823369677e8ccb880c053f45122c02a",
+            "missing": false
+          }
+        },
+        "extra_field_count": 0
+      },
+      {
+        "changed_fields": {
+          "state": {
+            "actual_characters": 1852,
+            "actual_sha256": "97c15a58ab4dfd6f290374bc831ee3c7cc21878715d7100953e5e3eee285aa50",
+            "expected_characters": 1870,
+            "expected_sha256": "37c177891036103e849c5237a193c7468823369677e8ccb880c053f45122c02a",
+            "missing": false
+          }
+        },
+        "extra_field_count": 0
+      },
+      {
+        "changed_fields": {
+          "state": {
+            "actual_characters": 1250,
+            "actual_sha256": "47561b4e0c7ecd13912b38071670e757b3a1ccec4f2a6b410962490d10d1cc93",
+            "expected_characters": 1870,
+            "expected_sha256": "37c177891036103e849c5237a193c7468823369677e8ccb880c053f45122c02a",
+            "missing": false
+          }
+        },
+        "extra_field_count": 0
+      }
+    ]
+  },
+  "error": "PPLX tool arguments differ from requested values (state); decision not recorded",
+  "error_type": "ToolArgumentsMismatch",
+  "original_sha256": "11529cd36e53481d0482a9a00726f2105c328af1af67e0b0144120722b00c33a",
+  "row_id": "meajor-100673-11529cd36e53481d0482a9a0",
+  "selected_row_number": 43395
+}

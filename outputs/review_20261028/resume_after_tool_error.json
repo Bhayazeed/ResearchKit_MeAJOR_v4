@@ -1,0 +1,15 @@
+{
+  "checkpoint": "outputs\\quality_pplx_openwebui_english_length_v3\\quality_checkpoint.jsonl",
+  "completed": 43350,
+  "unique_ids": 43350,
+  "remaining": 4684,
+  "provider_counts": {
+    "precheck": 20355,
+    "ollama": 22977,
+    "openwebui": 18
+  },
+  "unknown_ids": 0,
+  "hash_mismatches": 0,
+  "routing_prompt_matches_manifest": true,
+  "next_row_id": "meajor-100582-a9023d5efaf9333fe7f4381a"
+}
